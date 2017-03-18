@@ -1,98 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="startTravelApp">
 <head>
-	<title>DBTravel</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-	<link rel="stylesheet" type="text/css" href="style.css">
+    <title>DBTravel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css"
+          integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular-animate.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script type="text/javascript"
+            src="/static/angular-daterangepicker.min.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header"> 
-	    <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href="#" class="navbar-brand">
-	    <img src="logo.gif" style="display: inline-block; height: 25px;">
-	    Travel</a> 
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-6" aria-expanded="false"><span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a href="#" class="navbar-brand">
+                <img src="/static/logo.gif" style="display: inline-block; height: 25px;">
+                Travel</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Log out</a></li>
+        </ul>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html">Log out</a></li>
-    </ul>
-  </div>
 </nav>
+<script>
+    angular.module('startTravelApp', ['daterangepicker', 'ngAnimate'])
+        .directive('backImg', function () {
+            return function (scope, element, attrs) {
+                var url = attrs.backImg;
+                element.css({
+                    'background-image': 'url(' + url + ')',
+                    'background-size': 'cover'
+                });
+            };
+        })
+        .controller('StartTravelController', ['$http', function ($http) {
+            var app = this;
+            app.access_token = window.location.search;
+            app.access_token = app.access_token.replace("?", '');
 
-<div class="content" style="padding-top: 70px;">
-	<div class="container">
-	<div class="row">
-	<div class="col-sm-6 col-md-4">
-		<div class="well" style="min-height: 150px;">
-			<h4>Anna's Cheking Account</h4>
-			<strong>Balance:</strong> 23,000.15€
-			<br/>
-			<strong>Departure:</strong> Frankfurt, Germany
-			<br/>
-			<strong>Average previous cost:</strong> 3,112.34€
-			<div class="form-inline">
-				<label for="dates">Dates:</label>
-				<input style="width: 200px; margin-right: 10px;" type="text" class="form-control" name="daterange" value="03/19/2017 - 03/21/2017" />
-				<button type="submit" class="btn btn-default">Search</button>
-			</div>
-		</div>
-	</div>
-	</div>
-	</div>
+            app.userInfo = {};
+            app.loading = {
+                progressBarActive: false,
+                progressBarText: "",
+                indicator: false,
+                firstPhase: false
+            };
 
-	<div class="container">
-		<div class="progress">
-		  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-		    <span class="sr-only">60% Complete</span>
-		  </div>
-		</div>
-	</div>
+            app.getUserInfo = function () {
+                app.loading.indicator = true;
+                $http.post('/api/info', {
+                    'access_token': app.access_token
+                }).then(function (response) {
+                    app.userInfo = response.data;
+                    app.loading.indicator = false;
+                });
+            };
 
-	<div class="results">
-	<div class="container">
-		<div class="bs-example" data-example-id="thumbnails-with-custom-content"> 
-			<div class="row"> 
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail shaded">
-						<div class="bg-pic" style="background-image: url('berlin.jpg');"></div>
-						<div class="caption"> <i class="fa fa-plane fa-4x small-icon" aria-hidden="true"></i>  <h3 style="display: inline-block;">Berlin</h3> 
-						<p>598.50€</p> 
-						<p><a href="#" class="btn btn-primary" role="button">Go to offer</a> <a href="#" class="btn btn-default" role="button">View hotels</a> </p> </div> 
-				</div> </div> 
+            app.getUserInfo();
 
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail shaded">
-						<div class="bg-pic" style="background-image: url('http://www.parisattitude.com/images/monuments.jpg');"></div>
-						<div class="caption"> <i class="fa fa-plane fa-4x small-icon" aria-hidden="true"></i>  <h3 style="display: inline-block;">Paris</h3> 
-						<p>345.67€</p> 
-						<p><a href="#" class="btn btn-primary" role="button">Go to offer</a> <a href="#" class="btn btn-default" role="button">View hotels</a> </p> </div> 
-				</div> </div> 
+            app.flights = [];
 
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail shaded">
-						<div class="bg-pic" style="background-image: url('http://www.telegraph.co.uk/content/dam/video_previews/l/n/lnmmzznze6qxo0ddc4ajydmzur-2xcfh-large.jpg');"></div>
-						<div class="caption"> <i class="fa fa-plane fa-4x small-icon" aria-hidden="true"></i>  <h3 style="display: inline-block;">Rome</h3> 
-						<p>127.12€</p> 
-						<p><a href="#" class="btn btn-primary" role="button">Go to offer</a> <a href="#" class="btn btn-default" role="button">View hotels</a> </p> </div> 
-					</div> 
-				</div> 
-			</div>
-		</div>
-	</div>
+            app.getFlights = function (start, end) {
+                var params = {
+                    "start": start.format('YYYY-MM-DD'),
+                    "end": end.format('YYYY-MM-DD'),
+                    "city": app.userInfo.address,
+                    "limit": app.userInfo.account.balance,
+                    "target_price": app.userInfo.previous_avg
+                };
+                app.loading.firstPhase = true;
+                $http.post('/api/flights', params).then(function (response) {
+                    app.loading.firstPhase = false;
+                    app.flights = response.data.result;
+                }, function errorCallback() {
+                    app.loading.firstPhase = false;
+                });
 
-<script type="text/javascript">
-$(function() {
-    $('input[name="daterange"]').daterangepicker();
-});
+            };
+
+            app.datePickerdate = {startDate: null, endDate: null};
+            app.datePickerOptions = {
+                locale: {
+                    format: "YYYY-MM-DD", //will give you 2017-01-06
+                },
+                eventHandlers: {
+                    'apply.daterangepicker': function (ev, picker) {
+                        app.getFlights(app.datePickerdate.startDate, app.datePickerdate.endDate);
+                    }
+                }
+            };
+        }]);
 </script>
+<div class="content" style="padding-top: 70px;" ng-controller="StartTravelController as startCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="well" style="min-height: 150px;">
+                    <div ng-hide="startCtrl.loading.indicator"
+                         ng-class="!startCtrl.loading.indicator ? 'animated' : ''">
+                        <h4>{{ startCtrl.userInfo.info.firstName }}'s Account</h4>
+                        <strong>Balance:</strong> {{ startCtrl.userInfo.account.balance }} €
+                        <br/>
+                        <strong>Departure:</strong> {{ startCtrl.userInfo.address }}
+                        <br/>
+                        <strong>Average previous cost:</strong> {{ startCtrl.userInfo.previous_avg}} €
+                        <div class="form-inline">
+                            <form id="daterange-form">
+                                <input date-range-picker class="form-control date-picker" type="text"
+                                       ng-disabled="startCtrl.loading.firstPhase"
+                                       ng-model="startCtrl.datePickerdate" options="startCtrl.datePickerOptions"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div ng-hide="!startCtrl.loading.indicator">
+                        <div style="width: 100%; text-align: center;">
+                            <i class="fa fa-spinner fa-pulse fa-4x fa-fw" style="font-size: 7em;"></i>
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-8">
+            </div>
+        </div>
+    </div>
+    <div class="results">
+        <div class="container">
+            <div class="bs-example" data-example-id="thumbnails-with-custom-content">
+                <div class="row">
+                    <div class="col-md-4 flight-card" ng-repeat="flight in startCtrl.flights">
+                        <div class="thumbnail shaded">
+                            <div class="bg-pic" back-img="{{flight.background}}"></div>
+                            <div class="caption"><i class="fa fa-plane fa-4x small-icon" aria-hidden="true"></i>
+                                <h4 style="display: inline-block;">{{flight.go_to}}</h4>
+                                <p>{{flight.price}}€</p>
+                                <p>
+                                    <a ng-href="{{flight.link}}" class="btn btn-primary" role="button" target="_blank">
+                                        Go to offer
+                                    </a>
+                                    &nbsp;
+                                    <a ng-href="{{flight.booking_link}}" class="btn btn-default" role="button" target="_blank">
+                                        View hotels
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('input[name="daterange"]').daterangepicker();
+            });
+        </script>
 
 </body>
 </html>

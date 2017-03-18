@@ -1,67 +1,87 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
 
-body { 
-	font-family: "Source Sans Pro", Arial;
+body {
+    font-family: "Source Sans Pro", Arial;
 }
 
 .content {
-	margin-top: -70px;
-	margin-bottom: 0px;
+    margin-top: -70px;
+    margin-bottom: 0px;
 }
 
 .jumbotron {
-	background-color: rgba(255, 255, 255, 0.7);
-	margin-bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0px;
 }
 
 .good-m {
-	margin-top: 70px;
-	margin-bottom: 100px;
-	text-align: center;
+    margin-top: 70px;
+    margin-bottom: 100px;
+    text-align: center;
 }
 
 .jumbotron h1 {
-	margin-bottom: 20px;
-	font-weight: 300;
+    margin-bottom: 20px;
+    font-weight: 300;
 }
 
 .large-icon {
-	font-size: 6em;
-	margin: 30px;
+    font-size: 6em;
+    margin: 30px;
 }
 
 .small-icon {
-	font-size: 1.3em;
-	margin: 2px;
-	display: inline-block;
+    font-size: 1.3em;
+    margin: 2px;
+    display: inline-block;
 }
 
 .shaded {
-	background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 39%, rgba(255,255,255,0) 100%);
-	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 39%,rgba(255,255,255,0) 100%);
-	background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 39%,rgba(255,255,255,0) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
-	position: relative; padding: 0;
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 39%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 39%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 39%, rgba(255, 255, 255, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=1);
+    position: relative;
+    padding: 0;
 }
 
 .bg-pic {
-	width: 100%;
-	height: 100%;
-	position: absolute; 
-	z-index: -1;
-	background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background-size: cover;
 }
 
 #stripe-cont {
-	background-color: rgba(0, 0, 0, 0.5);
-	color: white;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
 }
 
 @media screen and (max-width: 800px) {
     .jumbotron a {
-		font-size: 80%;
-	}
+        font-size: 80%;
+    }
+}
+
+.animated {
+    transition: all 0.7s ease 0.7s;
+}
+
+.flight-card.ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.flight-card.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.flight-card.ng-enter-stagger {
+  transition-delay: 0.1s;
+  animation-delay: 0.1s;
 }
