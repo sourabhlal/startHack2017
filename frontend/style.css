@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
+
+body { 
+	font-family: "Source Sans Pro", Arial;
+}
+
+.content {
+	margin-top: -70px;
+	margin-bottom: 0px;
+}
+
+.jumbotron {
+	background-color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 0px;
+}
+
+.good-m {
+	margin-top: 70px;
+	margin-bottom: 100px;
+	text-align: center;
+}
+
+.jumbotron h1 {
+	margin-bottom: 20px;
+	font-weight: 300;
+}
+
+.large-icon {
+	font-size: 6em;
+	margin: 30px;
+}
+
+.shaded {
+	background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 39%, rgba(255,255,255,0) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 39%,rgba(255,255,255,0) 100%);
+	background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 39%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=1 );
+	position: relative; padding: 0;
+}
+
+.bg-pic {
+	width: 100%;
+	height: 100%;
+	position: absolute; 
+	z-index: -1;
+	background-size: cover;
+}
+
+#stripe-cont {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .jumbotron a {
+		font-size: 80%;
+	}
+}
