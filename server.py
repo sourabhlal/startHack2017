@@ -87,7 +87,7 @@ def flights_api():
         sorted(
             filter(limiter, inter_results), key=dist_func
         )
-    )[:6]
+    )[:9]
 
 
 

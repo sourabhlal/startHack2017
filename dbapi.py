@@ -37,13 +37,30 @@ def get_user_info(access_token):
     r_account = sorted(accounts, key=lambda x: x['balance'])[-1]
     r_address = get_address(requests.get(ADDR_ENDPOINT, headers=headers).json())
 
+
+    previous_avg_cost, trips = get_previous_avg_cost(access_token)
     return {
         "info": r_info,
         "account": r_account,
         "address": r_address,
-        "previous_avg": -get_previous_avg_cost(access_token)
+        "previous_avg": -previous_avg_cost,
+        "trips": trips
     }
 
+
+def _process_transaction(transaction):
+    if 'Deutsche Bahn AG' in transaction['counterPartyName']:
+        return {
+            "type": "train",
+            "travel": list(map(lambda x: x.strip().rstrip('HBF').strip(), transaction['usage'].split('Ticket')[1].split('-'))),
+            "date": transaction['bookingDate']
+        }
+    elif 'AIRLINE' in transaction['counterPartyName']:
+        return {
+            "type": "plane",
+            "travel": list(map(lambda x: x.strip(), transaction['usage'].split('-'))),
+            "date": transaction['bookingDate']
+        }
 
 def get_previous_avg_cost(access_token):
     headers = {"Authorization": "Bearer " + access_token}
@@ -51,8 +68,8 @@ def get_previous_avg_cost(access_token):
     resp = r.json()
 
     trip_transcations = [
-        (idx, list(map(lambda x: x.rstrip('HBF').strip(), trans['usage'].split('Ticket')[1].split('-'))))
-        for idx, trans in enumerate(resp) if 'Deutsche Bahn AG' in trans['counterPartyName']
+        (idx, _process_transaction(trans))
+        for idx, trans in enumerate(resp) if 'Deutsche Bahn AG' in trans['counterPartyName'] or "AIRLINE" in trans['counterPartyName']
         ]
 
     total_trans_amount = 0.0
@@ -64,7 +81,14 @@ def get_previous_avg_cost(access_token):
             map(lambda x: min(x['amount'], 0), resp[start_idx:end_idx + 1])
         )
 
-    return total_trans_amount / (len(trip_transcations) / 2)
+    trips = [
+        {
+            "go": end[1],
+            "back": start[1],
+            "type": start[1]["type"]
+        } for start, end in pairwise(trip_transcations)
+    ]
+    return total_trans_amount / (len(trip_transcations) / 2), trips
 
 if __name__ == "__main__":
     r = requests.get(TRANS_ENDPOINT, headers=headers)

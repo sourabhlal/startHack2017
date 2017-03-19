@@ -173,7 +173,7 @@ def search_for_image(city):
     }
     params = {
         # Request parameters
-        'q': city,  # +" city",
+        'q': city  +" city",
         'count': '1',
         'offset': '0',
         'mkt': 'en-us',
