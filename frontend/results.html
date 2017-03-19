@@ -120,10 +120,10 @@
                         <br/>
                         <strong>Departure:</strong> {{ startCtrl.userInfo.address }}
                         <br/>
-                        <strong>Average previous cost:</strong> {{ startCtrl.userInfo.previous_avg | currency : '€' }}
-                        <div class="form-inline">
+                        <strong>Average travel cost:</strong> {{ startCtrl.userInfo.previous_avg | currency : '€' }}
+                        <div class="form-inline" style="margin-top: 10px;">
                             <form id="daterange-form">
-                                <input date-range-picker class="form-control date-picker" type="text"
+                                <input style="width: 100%" placeholder="Entry travel dates" date-range-picker class="form-control date-picker" type="text"
                                        ng-disabled="startCtrl.loading.firstPhase"
                                        ng-model="startCtrl.datePickerdate" options="startCtrl.datePickerOptions"/>
                             </form>
