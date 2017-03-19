@@ -88,7 +88,7 @@ def get_previous_avg_cost(access_token):
             "type": start[1]["type"]
         } for start, end in pairwise(trip_transcations)
     ]
-    return total_trans_amount / (len(trip_transcations) / 2), trips
+    return total_trans_amount / (len(trip_transcations) / 2), trips[:2]
 
 if __name__ == "__main__":
     r = requests.get(TRANS_ENDPOINT, headers=headers)
