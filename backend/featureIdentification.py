@@ -1,6 +1,7 @@
 import numpy as np
 
-def spectral_analysis_for_dominant_period(feature, featureTrajectory):
+# this is only for one feature
+def spectral_analysis_for_dominant_period(featureTrajectory):
 	ft = np.array(featureTrajectory)
 	DFT = np.fft.fft(ft)
 	try:
@@ -19,8 +20,8 @@ def average_dfidf(featureTrajectory):
 def heuristic_stop_word_detection(features, stopwords):
 	#Find max DPS, DFIDF, and min DFIDF from stopwords seed	
 	init_trajectory = features[stopwords[0]]
-	_,UDPS = spectral_analysis_for_dominant_period(sw,trajectory)
-	UDFIDF = average_dfidf(trajectory)
+	_,UDPS = spectral_analysis_for_dominant_period(init_trajectory)
+	UDFIDF = average_dfidf(init_trajectory)
 	LDFIDF = UDFIDF
 	for sw in stopwords:
 		trajectory = features.pop(sw, None)
