@@ -20,6 +20,7 @@ CASH_ACCOUNTS = 'https://simulator-api.db.com/gw/dbapi/v1/cashAccounts'
 
 access_token = ""
 
+mainstream_cities = ["London","Bangkok","Paris","Dubai","Istanbul","New York","Singapore","Kuala Lumpur","Seoul","Hong Kong","Tokyo","Barcelona","Amsterdam","Rome","Milan","Taipei","Shanghai","Vienna","Prague","Los Angeles","Las Vegas", "Pattaya", "Miami", "Guangzhou", "Antalya", "Taipei"];
 
 def get_address(address_list):
     valids = list(filter(lambda x: x['type'] == 'REGISTRATION_ADDRESS', address_list))
@@ -38,13 +39,14 @@ def get_user_info(access_token):
     r_address = get_address(requests.get(ADDR_ENDPOINT, headers=headers).json())
 
 
-    previous_avg_cost, trips = get_previous_avg_cost(access_token)
+    previous_avg_cost, trips, ratio = get_previous_avg_cost(access_token)
     return {
         "info": r_info,
         "account": r_account,
         "address": r_address,
         "previous_avg": -previous_avg_cost,
-        "trips": trips
+        "trips": trips,
+        "ratio": ratio
     }
 
 
@@ -73,13 +75,21 @@ def get_previous_avg_cost(access_token):
         ]
 
     total_trans_amount = 0.0
+    total_trips = 0.0
+    mainstream_trips = 0.0
 
     for start, end in pairwise(trip_transcations):
-        start_idx, _ = start
-        end_idx, _ = end
+        start_idx, start_trans = start
+        end_idx, end_trans = end
         total_trans_amount += sum(
             map(lambda x: min(x['amount'], 0), resp[start_idx:end_idx + 1])
         )
+        print(end_trans["travel"][1])
+        if end_trans["travel"][1] in mainstream_cities:
+            mainstream_trips += 1
+        total_trips += 1
+
+    print(mainstream_trips, total_trips)
 
     trips = [
         {
@@ -88,7 +98,7 @@ def get_previous_avg_cost(access_token):
             "type": start[1]["type"]
         } for start, end in pairwise(trip_transcations)
     ]
-    return total_trans_amount / (len(trip_transcations) / 2), trips[:2]
+    return total_trans_amount / (len(trip_transcations) / 2), trips[:2], 9*mainstream_trips/total_trips
 
 if __name__ == "__main__":
     r = requests.get(TRANS_ENDPOINT, headers=headers)

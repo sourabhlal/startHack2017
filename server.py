@@ -11,6 +11,8 @@ HEADER_BASE64 = base64.b64encode((CLIENT_ID + ":" + SECRET_KEY).encode())
 
 app = Bottle()
 
+mainstream_cities = ["London","Bangkok","Paris","Dubai","Istanbul","New York","Singapore","Kuala Lumpur","Seoul","Hong Kong","Tokyo","Barcelona","Amsterdam","Rome","Milan","Taipei","Shanghai","Vienna","Prague","Los Angeles","Las Vegas", "Pattaya", "Miami", "Guangzhou", "Antalya", "Taipei"];
+
 
 @app.hook('after_request')
 def enable_cors():
@@ -79,15 +81,23 @@ def flights_api():
 
     target = float(params.get('target_price'))
     limit = float(params.get('limit'))
+    ratio = float(params.get('ratio'))
 
     dist_func = lambda x: abs(x['price'] - target)
     limiter = lambda x: x['price'] <= limit * 0.8
 
+    non_hipster = list(filter(lambda x: x["go_to"].split(",")[0] in mainstream_cities, inter_results))
+    hipster = list(filter(lambda x: x["go_to"].split(",")[0] not in mainstream_cities, inter_results))
+
     final = list(
         sorted(
-            filter(limiter, inter_results), key=dist_func
+            filter(limiter, non_hipster), key=dist_func
         )
-    )[:9]
+    )[:int(ratio)] + list(
+        sorted(
+            filter(limiter, hipster), key=dist_func
+        )
+    )[:9-int(ratio)]
 
 
 
