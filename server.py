@@ -103,7 +103,7 @@ def flights_api():
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         final_2 = executor.map(
-            lambda x: {**x, 'background': search_for_image(x['go_to'].split(',')[0].strip().lower())}, final
+            lambda x: {**x, 'background': search_for_image(x['go_to'].split(',')[0].strip().lower()), 'is_mainstream': x['go_to'].split(',')[0].strip() in mainstream_cities}, final
         )
 
     return {

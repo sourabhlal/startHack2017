@@ -172,6 +172,7 @@
                             <div class="bg-pic" back-img="{{flight.background}}"></div>
                             <div class="caption"><i class="fa fa-plane fa-4x small-icon" aria-hidden="true"></i>
                                 <h4 style="display: inline-block;">{{flight.go_to}}</h4>
+                                <i class="fa fa-star fa-4x small-icon" aria-hidden="true" style="color: #FFD700; float: right" ng-show="{{flight.is_mainstream}}"></i>
                                 <p>{{flight.price}}€</p>
                                 <p style="margin-bottom: 0px;">
                                     <a ng-href="{{flight.link}}" class="btn btn-primary" role="button" target="_blank">
